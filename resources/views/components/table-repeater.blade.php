@@ -82,6 +82,7 @@
                                     }
                                 ])
                                 style="width: {{ $header->getWidth() }}"
+                                colspan="{{ $header->getColspan() }}"
                             >
                                 {{ $header->getLabel() }}
                                 @if ($header->isRequired())
@@ -128,11 +129,6 @@
                                                 'table-repeater-column',
                                                 'p-2' => ! $streamlined,
                                                 'has-hidden-label' => $cell->isLabelHidden(),
-                                                match($headers[$counter++]->getAlignment()) {
-                                                  'center', Alignment::Center => 'text-center',
-                                                  'right', 'end', Alignment::Right, Alignment::End => 'text-end',
-                                                  default => 'text-start'
-                                                }
                                             ])
                                             style="width: {{ $cell->getMaxWidth() ?? 'auto' }}"
                                         >
@@ -200,16 +196,7 @@
         @endif
 
         @if ($addAction->isVisible() || filled($visibleExtraActions))
-            <ul
-                @class([
-                    'relative flex gap-4',
-                    match ($getAddActionAlignment()) {
-                        Alignment::Start, Alignment::Left => 'justify-start',
-                        Alignment::End, Alignment::Right => 'justify-end',
-                        default =>  'justify-center',
-                    },
-                ])
-            >
+        <ul class="relative flex gap-4 justify-center">
                 @if ($addAction->isVisible())
                     <li>
                         {{ $addAction }}

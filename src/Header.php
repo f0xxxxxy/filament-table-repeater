@@ -17,6 +17,7 @@ class Header
         public string | Htmlable | Closure | null $label = null,
         public string | Closure | Alignment | null $align = null,
         public string | Closure | null $width = null,
+        public int | Closure | null $colspan = null,
         public bool | Closure | null $isRequired = null,
     ){}
 
@@ -46,6 +47,13 @@ class Header
         return $this;
     }
 
+    public function colspan(int | Closure $colspan): static
+    {
+        $this->colspan = $colspan;
+
+        return $this;
+    }
+
     public function markAsRequired(bool | Closure | null $condition = true): static
     {
         $this->isRequired = $condition;
@@ -71,6 +79,12 @@ class Header
             ?? 'auto';
     }
 
+    public function getColspan(): int
+    {
+        return $this->evaluate($this->colspan)
+            ?? 1;
+    }
+    
     public function isRequired(): bool
     {
         return $this->evaluate($this->isRequired)
